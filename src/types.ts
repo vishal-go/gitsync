@@ -19,7 +19,7 @@ export const DEFAULT_SETTINGS: GitSyncSettings = {
 	autoSync: false,
 	autoSyncInterval: 30,
 	lastSyncTime: 0,
-	excludedFolders: ['.obsidian/plugins', '.obsidian/themes', '.trash'],
+	excludedFolders: ['{{configDir}}/plugins', '{{configDir}}/themes', '.trash'],
 	excludedFiles: ['.DS_Store', 'Thumbs.db'],
 	commitMessage: 'Obsidian sync: {{date}}'
 };

@@ -51,15 +51,23 @@ export class SyncService {
 	}
 
 	/**
+	 * Resolve {{configDir}} placeholder in exclusion paths
+	 */
+	private resolveConfigDir(path: string): string {
+		return path.replace('{{configDir}}', this.app.vault.configDir);
+	}
+
+	/**
 	 * Get all vault files (excluding configured folders/files)
 	 */
-	private async getVaultFiles(): Promise<TFile[]> {
+	private getVaultFiles(): TFile[] {
 		const allFiles = this.app.vault.getFiles();
 		
 		return allFiles.filter(file => {
 			// Check excluded folders
 			for (const folder of this.settings.excludedFolders) {
-				if (file.path.startsWith(folder)) {
+				const resolvedFolder = this.resolveConfigDir(folder);
+				if (file.path.startsWith(resolvedFolder)) {
 					return false;
 				}
 			}
@@ -242,7 +250,8 @@ export class SyncService {
 				// Check if file should be excluded
 				let shouldSkip = false;
 				for (const folder of this.settings.excludedFolders) {
-					if (remoteFile.path.startsWith(folder)) {
+					const resolvedFolder = this.resolveConfigDir(folder);
+					if (remoteFile.path.startsWith(resolvedFolder)) {
 						shouldSkip = true;
 						break;
 					}
@@ -346,7 +355,8 @@ export class SyncService {
 				// Check exclusions
 				let shouldSkip = false;
 				for (const folder of this.settings.excludedFolders) {
-					if (path.startsWith(folder)) {
+					const resolvedFolder = this.resolveConfigDir(folder);
+					if (path.startsWith(resolvedFolder)) {
 						shouldSkip = true;
 						break;
 					}

@@ -17,17 +17,18 @@ export class GitSyncSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		containerEl.createEl('h1', { text: 'GitSync Settings' });
-		containerEl.createEl('p', { 
-			text: 'Sync your Obsidian vault to a GitHub repository. Works on mobile and desktop.',
-			cls: 'setting-item-description'
-		});
+		new Setting(containerEl)
+			.setName('GitSync settings')
+			.setDesc('Sync your Obsidian vault to a GitHub repository. Works on mobile and desktop.')
+			.setHeading();
 
 		// GitHub Account Section
-		containerEl.createEl('h2', { text: 'GitHub Account' });
+		new Setting(containerEl)
+			.setName('GitHub account')
+			.setHeading();
 
 		new Setting(containerEl)
-			.setName('GitHub Username')
+			.setName('GitHub username')
 			.setDesc('Your GitHub username')
 			.addText(text => text
 				.setPlaceholder('username')
@@ -38,7 +39,7 @@ export class GitSyncSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName('GitHub Personal Access Token')
+			.setName('GitHub personal access token')
 			.setDesc('Create a token at GitHub → Settings → Developer settings → Personal access tokens. Required scopes: repo')
 			.addText(text => {
 				text
@@ -53,7 +54,7 @@ export class GitSyncSettingTab extends PluginSettingTab {
 			});
 
 		new Setting(containerEl)
-			.setName('Repository Name')
+			.setName('Repository name')
 			.setDesc('Name of the GitHub repository to sync to. Will be created if it doesn\'t exist.')
 			.addText(text => text
 				.setPlaceholder('obsidian-vault')
@@ -76,10 +77,10 @@ export class GitSyncSettingTab extends PluginSettingTab {
 
 		// Test Connection Button
 		new Setting(containerEl)
-			.setName('Test Connection')
+			.setName('Test connection')
 			.setDesc('Verify your GitHub credentials and repository access')
 			.addButton(button => button
-				.setButtonText('Test Connection')
+				.setButtonText('Test connection')
 				.setCta()
 				.onClick(async () => {
 					button.setDisabled(true);
@@ -94,14 +95,16 @@ export class GitSyncSettingTab extends PluginSettingTab {
 					}
 					
 					button.setDisabled(false);
-					button.setButtonText('Test Connection');
+					button.setButtonText('Test connection');
 				}));
 
 		// Sync Settings Section
-		containerEl.createEl('h2', { text: 'Sync Settings' });
+		new Setting(containerEl)
+			.setName('Sync settings')
+			.setHeading();
 
 		new Setting(containerEl)
-			.setName('Auto Sync')
+			.setName('Auto sync')
 			.setDesc('Automatically sync at regular intervals')
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.autoSync)
@@ -112,7 +115,7 @@ export class GitSyncSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName('Auto Sync Interval')
+			.setName('Auto sync interval')
 			.setDesc('How often to automatically sync (in minutes)')
 			.addSlider(slider => slider
 				.setLimits(5, 120, 5)
@@ -125,7 +128,7 @@ export class GitSyncSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName('Commit Message')
+			.setName('Commit message')
 			.setDesc('Commit message template. Use {{date}} for current date/time.')
 			.addText(text => text
 				.setPlaceholder('Obsidian sync: {{date}}')
@@ -136,14 +139,16 @@ export class GitSyncSettingTab extends PluginSettingTab {
 				}));
 
 		// Exclusions Section
-		containerEl.createEl('h2', { text: 'Exclusions' });
+		new Setting(containerEl)
+			.setName('Exclusions')
+			.setHeading();
 
 		new Setting(containerEl)
-			.setName('Excluded Folders')
-			.setDesc('Folders to exclude from sync (one per line)')
+			.setName('Excluded folders')
+			.setDesc('Folders to exclude from sync (one per line). Use {{configDir}} for the config folder.')
 			.addTextArea(text => {
 				text
-					.setPlaceholder('.obsidian/plugins\n.obsidian/themes\n.trash')
+					.setPlaceholder('{{configDir}}/plugins\n{{configDir}}/themes\n.trash')
 					.setValue(this.plugin.settings.excludedFolders.join('\n'))
 					.onChange(async (value) => {
 						this.plugin.settings.excludedFolders = value
@@ -158,7 +163,7 @@ export class GitSyncSettingTab extends PluginSettingTab {
 			});
 
 		new Setting(containerEl)
-			.setName('Excluded Files')
+			.setName('Excluded files')
 			.setDesc('File names or patterns to exclude (one per line)')
 			.addTextArea(text => {
 				text
@@ -177,7 +182,9 @@ export class GitSyncSettingTab extends PluginSettingTab {
 			});
 
 		// Manual Sync Section
-		containerEl.createEl('h2', { text: 'Manual Sync' });
+		new Setting(containerEl)
+			.setName('Manual sync')
+			.setHeading();
 
 		const syncButtonsDiv = containerEl.createDiv({ cls: 'gitsync-buttons' });
 
@@ -208,7 +215,7 @@ export class GitSyncSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(syncButtonsDiv)
-			.setName('Full Sync')
+			.setName('Full sync')
 			.setDesc('Push local changes, then pull remote changes')
 			.addButton(button => button
 				.setButtonText('Sync')

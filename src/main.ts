@@ -30,7 +30,7 @@ export default class GitSyncPlugin extends Plugin {
 
 		// Add commands
 		this.addCommand({
-			id: 'gitsync-push',
+			id: 'push',
 			name: 'Push to GitHub',
 			callback: async () => {
 				if (!this.syncService.isConfigured()) {
@@ -44,7 +44,7 @@ export default class GitSyncPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: 'gitsync-pull',
+			id: 'pull',
 			name: 'Pull from GitHub',
 			callback: async () => {
 				if (!this.syncService.isConfigured()) {
@@ -58,7 +58,7 @@ export default class GitSyncPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: 'gitsync-sync',
+			id: 'sync',
 			name: 'Sync with GitHub',
 			callback: async () => {
 				if (!this.syncService.isConfigured()) {
@@ -77,12 +77,12 @@ export default class GitSyncPlugin extends Plugin {
 		// Setup auto sync if enabled
 		this.setupAutoSync();
 
-		console.log('GitSync plugin loaded');
+		console.debug('GitSync plugin loaded');
 	}
 
 	onunload() {
 		this.clearAutoSync();
-		console.log('GitSync plugin unloaded');
+		console.debug('GitSync plugin unloaded');
 	}
 
 	async loadSettings() {
@@ -103,12 +103,14 @@ export default class GitSyncPlugin extends Plugin {
 		if (this.settings.autoSync && this.syncService.isConfigured()) {
 			const intervalMs = this.settings.autoSyncInterval * 60 * 1000;
 			
-			this.autoSyncIntervalId = window.setInterval(async () => {
+			this.autoSyncIntervalId = window.setInterval(() => {
 				if (!this.syncService.isBusy()) {
-					console.log('GitSync: Running auto-sync...');
-					await this.syncService.sync();
-					this.settings.lastSyncTime = Date.now();
-					await this.saveSettings();
+					console.debug('GitSync: Running auto-sync...');
+					void (async () => {
+						await this.syncService.sync();
+						this.settings.lastSyncTime = Date.now();
+						await this.saveSettings();
+					})();
 				}
 			}, intervalMs);
 
