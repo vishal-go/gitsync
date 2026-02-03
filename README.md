@@ -1,5 +1,8 @@
 # GitSync - Obsidian GitHub Sync Plugin
 
+[![GitHub release](https://img.shields.io/github/v/release/vishal-go/obsidian-gitsync)](https://github.com/vishal-go/obsidian-gitsync/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Sync your Obsidian vault to a GitHub repository. **Works on both mobile and desktop** without requiring Git to be installed locally.
 
 ## Features
@@ -12,6 +15,22 @@ Sync your Obsidian vault to a GitHub repository. **Works on both mobile and desk
 - 🔒 **Private Repos**: Automatically creates a private repository if it doesn't exist
 - 📁 **Exclusions**: Configure folders and files to exclude from sync
 - 🖼️ **Binary Files**: Supports images, PDFs, and other binary files
+
+## Installation
+
+### From Community Plugins (Recommended)
+
+1. Open **Settings → Community plugins**
+2. Disable **Restricted mode**
+3. Click **Browse** and search for "GitSync"
+4. Click **Install**, then **Enable**
+
+### Manual Installation
+
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/vishal-go/obsidian-gitsync/releases)
+2. Create folder: `<YourVault>/.obsidian/plugins/gitsync/`
+3. Copy the downloaded files into the folder
+4. Reload Obsidian and enable the plugin
 
 ## Setup
 
@@ -107,8 +126,25 @@ npm run dev
 
 # Build for production
 npm run build
+
+# Run linter
+npm run lint
 ```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed development guidelines.
+
+## Support
+
+- 🐛 [Report a bug](https://github.com/vishal-go/obsidian-gitsync/issues/new?template=bug_report.md)
+- 💡 [Request a feature](https://github.com/vishal-go/obsidian-gitsync/issues/new?template=feature_request.md)
+- 📖 [Documentation](https://github.com/vishal-go/obsidian-gitsync#readme)
+
+## Author
+
+**Vishal Sharma**
+- GitHub: [@vishal-go](https://github.com/vishal-go)
+- Email: sharma39vishal@gmail.com
 
 ## License
 
-MIT
+MIT License - see [LICENSE](LICENSE) for details.

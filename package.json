@@ -1,17 +1,26 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "obsidian-gitsync",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Sync your Obsidian vault to GitHub. Works on mobile and desktop without Git installed.",
 	"main": "main.js",
 	"type": "module",
+	"author": {
+		"name": "Vishal Sharma",
+		"email": "sharma39vishal@gmail.com",
+		"url": "https://github.com/vishal-go"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vishal-go/obsidian-gitsync"
+	},
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"lint": "eslint ."
 	},
-	"keywords": [],
-	"license": "0-BSD",
+	"keywords": ["obsidian", "github", "sync", "mobile", "backup"],
+	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^16.11.6",
 		"esbuild": "0.25.5",

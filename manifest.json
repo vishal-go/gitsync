@@ -4,7 +4,7 @@
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
 	"description": "Sync your Obsidian vault to GitHub. Works on mobile and desktop without Git installed.",
-	"author": "GitSync",
-	"authorUrl": "https://github.com",
+	"author": "Vishal Sharma",
+	"authorUrl": "https://github.com/vishal-go",
 	"isDesktopOnly": false
 }
