@@ -18,7 +18,7 @@ export class GitSyncSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('GitSync settings')
+			.setName('Configuration')
 			.setDesc('Sync your Obsidian vault to a GitHub repository. Works on mobile and desktop.')
 			.setHeading();
 
@@ -29,9 +29,9 @@ export class GitSyncSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('GitHub username')
-			.setDesc('Your GitHub username')
+			.setDesc('Your GitHub username.')
 			.addText(text => text
-				.setPlaceholder('username')
+				.setPlaceholder('Username')
 				.setValue(this.plugin.settings.githubUsername)
 				.onChange(async (value) => {
 					this.plugin.settings.githubUsername = value.trim();
@@ -39,11 +39,11 @@ export class GitSyncSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName('GitHub personal access token')
-			.setDesc('Create a token at GitHub → Settings → Developer settings → Personal access tokens. Required scopes: repo')
+			.setName('Personal access token')
+			.setDesc('Create a token at GitHub settings. Required scopes: repo.')
 			.addText(text => {
 				text
-					.setPlaceholder('ghp_xxxxxxxxxxxx')
+					.setPlaceholder('Token')
 					.setValue(this.plugin.settings.githubToken)
 					.onChange(async (value) => {
 						this.plugin.settings.githubToken = value.trim();
@@ -55,9 +55,9 @@ export class GitSyncSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Repository name')
-			.setDesc('Name of the GitHub repository to sync to. Will be created if it doesn\'t exist.')
+			.setDesc('The GitHub repository to sync to. Will be created if it doesn\'t exist.')
 			.addText(text => text
-				.setPlaceholder('obsidian-vault')
+				.setPlaceholder('Repository')
 				.setValue(this.plugin.settings.repositoryName)
 				.onChange(async (value) => {
 					this.plugin.settings.repositoryName = value.trim();
@@ -65,9 +65,10 @@ export class GitSyncSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName('Branch')
-			.setDesc('Git branch to use for syncing')
+			.setName('Branch name')
+			.setDesc('The Git branch to use for syncing.')
 			.addText(text => text
+				// eslint-disable-next-line obsidianmd/ui/sentence-case
 				.setPlaceholder('main')
 				.setValue(this.plugin.settings.branch)
 				.onChange(async (value) => {
@@ -78,34 +79,34 @@ export class GitSyncSettingTab extends PluginSettingTab {
 		// Test Connection Button
 		new Setting(containerEl)
 			.setName('Test connection')
-			.setDesc('Verify your GitHub credentials and repository access')
+			.setDesc('Verify your GitHub credentials and repository access.')
 			.addButton(button => button
-				.setButtonText('Test connection')
+				.setButtonText('Test')
 				.setCta()
 				.onClick(async () => {
 					button.setDisabled(true);
-					button.setButtonText('Testing...');
+					button.setButtonText('Testing');
 					
 					const success = await this.plugin.syncService.verifyConnection();
 					
 					if (success) {
-						new Notice('✓ Connection successful!');
+						new Notice('Connection successful.');
 					} else {
-						new Notice('✗ Connection failed. Check your credentials.');
+						new Notice('Connection failed, check your credentials.');
 					}
 					
 					button.setDisabled(false);
-					button.setButtonText('Test connection');
+					button.setButtonText('Test');
 				}));
 
 		// Sync Settings Section
 		new Setting(containerEl)
-			.setName('Sync settings')
+			.setName('Synchronization')
 			.setHeading();
 
 		new Setting(containerEl)
 			.setName('Auto sync')
-			.setDesc('Automatically sync at regular intervals')
+			.setDesc('Automatically sync at regular intervals.')
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.autoSync)
 				.onChange(async (value) => {
@@ -116,7 +117,7 @@ export class GitSyncSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Auto sync interval')
-			.setDesc('How often to automatically sync (in minutes)')
+			.setDesc('How often to automatically sync (in minutes).')
 			.addSlider(slider => slider
 				.setLimits(5, 120, 5)
 				.setValue(this.plugin.settings.autoSyncInterval)
@@ -145,7 +146,7 @@ export class GitSyncSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Excluded folders')
-			.setDesc('Folders to exclude from sync (one per line). Use {{configDir}} for the config folder.')
+			.setDesc('Folders to exclude from sync, one per line. Use {{configDir}} for the config folder.')
 			.addTextArea(text => {
 				text
 					.setPlaceholder('{{configDir}}/plugins\n{{configDir}}/themes\n.trash')
@@ -164,10 +165,11 @@ export class GitSyncSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Excluded files')
-			.setDesc('File names or patterns to exclude (one per line)')
+			.setDesc('File names or patterns to exclude, one per line.')
 			.addTextArea(text => {
 				text
-					.setPlaceholder('.DS_Store\nThumbs.db')
+					// eslint-disable-next-line obsidianmd/ui/sentence-case
+					.setPlaceholder('file1.txt\nfile2.txt')
 					.setValue(this.plugin.settings.excludedFiles.join('\n'))
 					.onChange(async (value) => {
 						this.plugin.settings.excludedFiles = value

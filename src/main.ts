@@ -14,13 +14,13 @@ export default class GitSyncPlugin extends Plugin {
 		this.syncService = new SyncService(this.app, this.settings);
 
 		// Add ribbon icon for quick sync
-		this.addRibbonIcon('git-branch', 'GitSync: Sync with GitHub', async () => {
+		this.addRibbonIcon('git-branch', 'Sync with GitHub', async () => {
 			if (!this.syncService.isConfigured()) {
-				new Notice('GitSync: Please configure GitHub settings first');
+				new Notice('Please configure GitHub settings first.');
 				return;
 			}
 			if (this.syncService.isBusy()) {
-				new Notice('GitSync: Sync already in progress');
+				new Notice('Sync already in progress.');
 				return;
 			}
 			await this.syncService.sync();
@@ -34,7 +34,7 @@ export default class GitSyncPlugin extends Plugin {
 			name: 'Push to GitHub',
 			callback: async () => {
 				if (!this.syncService.isConfigured()) {
-					new Notice('GitSync: Please configure GitHub settings first');
+					new Notice('Please configure GitHub settings first.');
 					return;
 				}
 				await this.syncService.push();
@@ -48,7 +48,7 @@ export default class GitSyncPlugin extends Plugin {
 			name: 'Pull from GitHub',
 			callback: async () => {
 				if (!this.syncService.isConfigured()) {
-					new Notice('GitSync: Please configure GitHub settings first');
+					new Notice('Please configure GitHub settings first.');
 					return;
 				}
 				await this.syncService.pull();
@@ -62,7 +62,7 @@ export default class GitSyncPlugin extends Plugin {
 			name: 'Sync with GitHub',
 			callback: async () => {
 				if (!this.syncService.isConfigured()) {
-					new Notice('GitSync: Please configure GitHub settings first');
+					new Notice('Please configure GitHub settings first.');
 					return;
 				}
 				await this.syncService.sync();
@@ -86,7 +86,7 @@ export default class GitSyncPlugin extends Plugin {
 	}
 
 	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData() as Partial<GitSyncSettings>);
 	}
 
 	async saveSettings() {

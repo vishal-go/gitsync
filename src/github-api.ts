@@ -42,7 +42,7 @@ export class GitHubAPI {
 		const response = await requestUrl(params);
 
 		if (response.status >= 400) {
-			const errorMessage = response.json?.message || `HTTP ${response.status}`;
+			const errorMessage = (response.json as { message?: string })?.message || `HTTP ${response.status}`;
 			throw new Error(`GitHub API Error: ${errorMessage}`);
 		}
 

@@ -1,4 +1,4 @@
-import { App, TFile, TFolder, Notice, normalizePath } from 'obsidian';
+import { App, TFile, Notice, normalizePath } from 'obsidian';
 import { GitHubAPI } from './github-api';
 import { GitSyncSettings, SyncResult, GitHubFile } from './types';
 
@@ -175,7 +175,7 @@ export class SyncService {
 		this.isSyncing = true;
 
 		try {
-			new Notice('GitSync: Pushing to GitHub...');
+			new Notice('Pushing to GitHub.');
 
 			// Ensure repository exists
 			const repoExists = await this.api.ensureRepository();
@@ -184,7 +184,7 @@ export class SyncService {
 			}
 
 			// Get all vault files
-			const vaultFiles = await this.getVaultFiles();
+			const vaultFiles = this.getVaultFiles();
 			
 			// Prepare files for batch upload
 			const filesToUpload: Array<{ path: string; content: string }> = [];
@@ -240,7 +240,7 @@ export class SyncService {
 		this.isSyncing = true;
 
 		try {
-			new Notice('GitSync: Pulling from GitHub...');
+			new Notice('Pulling from GitHub.');
 
 			// Get all files from GitHub
 			const remoteFiles = await this.api.getAllFiles();
@@ -305,7 +305,7 @@ export class SyncService {
 		this.isSyncing = true;
 
 		try {
-			new Notice('GitSync: Starting sync...');
+			new Notice('Starting sync.');
 
 			// Ensure repository exists
 			const repoExists = await this.api.ensureRepository();
@@ -314,7 +314,7 @@ export class SyncService {
 			}
 
 			// Get all files from both sources
-			const vaultFiles = await this.getVaultFiles();
+			const vaultFiles = this.getVaultFiles();
 			const remoteFiles = await this.api.getAllFiles();
 
 			// Create maps for comparison
@@ -351,7 +351,7 @@ export class SyncService {
 			}
 
 			// Download remote files that don't exist locally
-			for (const [path, remoteFile] of remoteFileMap) {
+			for (const path of remoteFileMap.keys()) {
 				// Check exclusions
 				let shouldSkip = false;
 				for (const folder of this.settings.excludedFolders) {
