@@ -1,7 +1,7 @@
 {
 	"name": "obsidian-gitsync",
 	"version": "1.0.0",
-	"description": "Sync your Obsidian vault to GitHub. Works on mobile and desktop without Git installed.",
+	"description": "Sync your vault to GitHub. Works on mobile and desktop without Git installed.",
 	"main": "main.js",
 	"type": "module",
 	"author": {
